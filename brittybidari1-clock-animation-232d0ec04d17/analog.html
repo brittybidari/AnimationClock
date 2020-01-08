@@ -1,0 +1,202 @@
+<html>
+<head>
+    <title>SSaurel's Analog Clock</title>
+    <link href="https://fonts.googleapis.com/css?family=Rajdhani" rel="stylesheet">
+    <style type="text/css">
+        .test {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background-color: red;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            transform: translate(-50%, -50%);
+        }
+
+        .clock-radius {
+            height: 250px;
+            width: 250px;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            margin-top: -27px;
+            MARGIN-LEFT: -10px;
+            background-color: rgba(76, 80, 83, 0.2);
+
+        }
+
+        .clock-mini {
+            position: relative;
+            height: 488px;
+            width: 333px;
+            margin: 0 auto;
+            background-image: url(watch.png);
+            background-size: 100%;
+            background-position: center;
+
+        }
+
+
+        .clock-mini .hand {
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            background-repeat: no-repeat;
+        }
+
+        .clock-mini .hand-hour {
+            display: block;
+            background-image: url(hour-final.png);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(0);
+            background-size: 13px 100%;
+            width: 12px;
+            height: 103px;
+            margin-top: -40px;
+            transform-origin: 0 38%;
+
+
+        }
+
+        .clock-mini .hand-minute {
+            display: block;
+            background-image: url(hour-final.png);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(0);
+            background-size: 10px 100%;
+            width: 10px;
+            height: 124px;
+            margin-top: -50px;
+            transform-origin: -3% 39%;
+        }
+
+        .clock-mini .hand-second {
+            display: block;
+
+            background-image: url(second-final.png);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(0);
+            background-size: 12px 100%;
+            width: 12px;
+            height: 144px;
+            margin-top: -48px;
+            transform-origin: 0% 33%;
+
+            background-position: top center;
+        }
+
+        @keyframes rotate {
+            100% {
+                transform: rotateZ(360deg);
+            }
+        }
+
+
+        .day-wrap {
+            position: absolute;
+            top: 81%;
+            left: 50%;
+            height: 30px;
+            width: 45px;
+            transform: translate(-50%, -50%);
+        }
+
+
+        #day {
+            padding: 2px 6px;
+            font-size: 24px;
+            letter-spacing: 6px;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+
+    </style>
+
+
+</head>
+<body>
+<div id="container">
+
+
+
+
+    <div class="clock-mini" id="analogClock">
+        <div class="clock-radius">
+            <div class="day-wrap">
+                <div id="day">08</div>
+            </div>
+            <div class="test"></div>
+            <div class="hand hand-hour ">
+
+            </div>
+            <div class="hand hand-minute">
+
+            </div>
+            <div class="hand hand-second">
+
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+<script type="text/javascript">
+
+
+    function setClock() {
+        const now = new Date();
+        // console.log(now);
+        const day = now.getDate();
+        if (day > 9) {
+            document.getElementById('day').innerHTML = day;
+        } else {
+            document.getElementById('day').innerHTML = '0' + day;
+        }
+
+        var seconds = now.getSeconds();
+        var minutes = now.getMinutes();
+        var hours = now.getHours();
+
+        var secondDegree = ((seconds / 60) * 360);
+        var minuteDegree = ((minutes / 60) * 360);
+        var hourDegree = (30*hours+(minutes/2.5));
+
+        var min = 0;
+        while (min != 0) {
+            console.log(min);
+            if (minutes % 10 == 0) {
+                hourDegree = hourDegree + 6;
+            }
+            min = min + 1;
+            if (minutes == 60) {
+                min = 0;
+            }
+        }
+
+        document.querySelector('.hand-second').style.transform = `rotate(${secondDegree}deg)  translate(-50%,-50%) `;
+
+        document.querySelector('.hand-minute').style.transform = `rotate(${minuteDegree}deg)  translate(-50%,-50%)`;
+        document.querySelector('.hand-hour').style.transform = `rotate(${hourDegree}deg)  translate(-50%,-50%)`;
+    }
+
+    setInterval(setClock, 1000);
+</script>
+<script src="jquery.min.js"></script>
+
+</body>
+</html>
